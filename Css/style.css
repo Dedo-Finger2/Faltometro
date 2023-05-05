@@ -1,0 +1,7 @@
+.formulario {
+    border-radius: 20px;
+    background: linear-gradient(135deg, #F1D9FF, #91A4FC);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border: 2px solid #91A4FC;
+    padding: 20px;
+}
