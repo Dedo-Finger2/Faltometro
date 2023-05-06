@@ -13,11 +13,17 @@ class Calculator
      */
     public function __construct($materia = null, $porcentagem)
     {
+        // Converte o valor de porcentagem para uma string
         $porcentagem = (string) $porcentagem;
         
+        /**
+         * Verifica se a porcentagem transformada em string é igual a uma string '0' (qualquer letra) 
+         * ou $porcentagem transformada em int é menor ou igual a zero ou maior ou igual a 101
+         */
         if ($porcentagem === '0' || (int) $porcentagem <= 0 || (int)$porcentagem >= 101) {
             throw new InvalidArgumentException("A porcentagem de faltas deve ser um inteiro maior que 0 e menor que 101");
         } else {
+            // Transforma a porcentagem de volta à uma int
             $porcentagem = (int)$porcentagem;
         }
 
@@ -31,6 +37,7 @@ class Calculator
      */
     public function calcularFaltasHoras()
     {
+        // Array com as materias
         $materias = [
             'Comunicação Oral e Escrita' => 48,
             'Fundamentos de Tecnologia da Informação' => 36,
@@ -51,17 +58,21 @@ class Calculator
             'TCC' => 60
         ];
 
+        // Verifica se a matéria não foi selecionada
         if ($this->materiaSelecionada == null) {
             throw new InvalidArgumentException("A matéria não foi selecionada");
         }
 
+        // Verifica se a matéria existe no array $materias
         if (!array_key_exists($this->materiaSelecionada, $materias)) {
             throw new InvalidArgumentException("A matéria selecionada não existe");
         }
 
+        // Atribui a carga horária da matéria selecionada a $cargaHoaria e calcula as faltas aceitáveis
         $cargaHoraria = $materias[$this->materiaSelecionada];
         $horasFaltasAceitavel = ($cargaHoraria * $this->porcentagemFaltas) / 100;
 
+        // Retorna um array associativo com a matéria selecionada e quantas horas é aceitável faltar
         return [
             'materia' => $this->materiaSelecionada,
             'horas' => $horasFaltasAceitavel,
@@ -72,7 +83,6 @@ class Calculator
      * Converte as horas faltas aceitáveis em dias de aula (1 dia = 3 horas)
      * @param int $horas - Horas de aula que podem ser faltadas
      * @return int - Dias que podem ser faltados
-     * @throws InvalidArgumentException se as horas não forem um número inteiro
      */
     public function converterHorasParaDias($horas)
     {
